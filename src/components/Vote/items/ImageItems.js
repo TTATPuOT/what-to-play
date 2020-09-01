@@ -1,12 +1,13 @@
 import React from 'react';
 
-function baseItems (props) {
+function ImageItems (props) {
     return props.items.map((item, index) =>
         <div
             key={item.id}
-            className={item.selected ? "active item" : "item"}
+            className={item.selected ? "active item-img" : "item-img"}
             onClick={() => props.toggleSelected(index)}
         >
+            {!!(item.image) && <img src={item.image} alt={item.name} />}
             {item.name}
             {!!(item.text) && <><p className="text">{item.text}</p></>}
         </div>
@@ -14,4 +15,4 @@ function baseItems (props) {
 }
 
 
-export default baseItems;
+export default ImageItems;

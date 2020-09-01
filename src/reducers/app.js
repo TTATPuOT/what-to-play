@@ -1,7 +1,7 @@
 import {APP_STAGE_CHANGE, CHOICES_SET} from "../constants/actionTypes";
 
 const initialState = {
-    stage: 0
+    stage: 9
 };
 
 export default (state = initialState, action) => {

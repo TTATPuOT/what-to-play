@@ -4,10 +4,12 @@ import stageTypes from "../../constants/stageTypes";
 import Loader from "../Loader";
 import BaseItems from "./items/BaseItems";
 import ChildItems from "./items/ChildItems";
-import igdb from "../../api/igdb";
 import choicesSet from "../../actions/choicesSet";
 
 import "./Vote.sass";
+import BigItems from "./items/BigItems";
+import TwoItems from "./items/TwoItems";
+import ImageItems from "./items/ImageItems";
 
 class Vote extends React.Component {
     constructor(props) {
@@ -64,7 +66,7 @@ class Vote extends React.Component {
     }
 
     render() {
-        const TagNameTypes = { base: BaseItems, child: ChildItems };
+        const TagNameTypes = { base: BaseItems, child: ChildItems, big: BigItems, two: TwoItems, image: ImageItems };
         const TagName = TagNameTypes[this.state.stage.component];
         const variants = this.state.loading || !TagName
             ? <Loader />
@@ -79,7 +81,7 @@ class Vote extends React.Component {
                     <div className="variants">{variants}</div>
                     <div className="bottom">
                         <button disabled={this.state.loading} className="other" onClick={this.getOther}>
-                            Give me other options for answer...
+                            {this.state.stage.change ? "Give me other options for answer..." : ""}
                         </button>
                         <button
                             className="next"
