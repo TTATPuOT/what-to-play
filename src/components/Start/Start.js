@@ -1,6 +1,8 @@
 import React from 'react';
+import {connect} from "react-redux";
 
 import "./Start.sass";
+import changeStage from "../../actions/changeStage";
 
 class Start extends React.Component {
     constructor(props) {
@@ -10,29 +12,37 @@ class Start extends React.Component {
     }
 
     render() {
+
         return (
             <section className="start">
-                <h1>Здравствуйте!</h1>
+                <h1>Hi there!</h1>
                 <div className="cards">
                     <div className="card">
-                        <h4>Отвечайте на вопросы</h4>
-                        <p>Мы зададим Вам 10 вопросов о игровых предпочтениях</p>
+                        <h4>Ask the questions</h4>
+                        <p>Мы зададим Вам всего 10 вопросов о игровых предпочтениях</p>
                     </div>
                     <div className="card">
-                        <h4>Меняйте ответы</h4>
-                        <p>Если Вам не нравятся ответы, вы можете их обновить</p>
+                        <h4>Change asks</h4>
+                        <p>Если Вам не подходят ответы, вы можете их обновить.</p>
                     </div>
                     <div className="card">
-                        <h4>Получите список игр</h4>
-                        <p>Исходя из ваших ответов, мы выберем для вас несколько игр</p>
+                        <h4>Get games recommendations</h4>
+                        <p>Исходя из ваших ответов, мы выберем для вас несколько игр. Они вам точно понравятся!</p>
                     </div>
                 </div>
 
-                <button>Начать!</button>
+                <button onClick={this.props.start}>Start</button>
             </section>
         )
     }
 }
 
 
-export default Start;
+export default connect(
+    state => ({
+        app: state.app
+    }),
+    dispatch => ({
+        start: () => dispatch(changeStage(1))
+    })
+)(Start);

@@ -1,22 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-import Vote from './components/Vote';
-import Progressbar from "./components/Progressbar";
-import Start from './components/Start';
+import {combineReducers, createStore} from "redux";
+import {Provider} from "react-redux";
+import appReducer from "./reducers/app";
+import choicesReducer from "./reducers/choices";
+import App from "./App";
 
 import "normalize.css";
 import "./index.sass";
 
+const reducers = combineReducers({ app: appReducer, choices: choicesReducer });
+const store = createStore(reducers);
+
+if (process.env.NODE_ENV !== "production")
+    store.subscribe(() => console.log("Store changed", store.getState()))
+
 ReactDOM.render(
     <React.StrictMode>
-        <section className="screen">
-            <div className="content">
-                {/*<Progressbar />*/}
-                {/*<Vote />*/}
-                <Start />
-            </div>
-        </section>
+        <Provider store={store}>
+            <App />
+        </Provider>
     </React.StrictMode>,
     document.getElementById('root')
 );

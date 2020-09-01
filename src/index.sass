@@ -5,6 +5,9 @@ body
     color: #dcddde
     font-family: "Open Sans", Arial, sans-serif
 
+button:disabled
+    cursor: not-allowed !important
+
 section.screen
     margin: auto
     display: flex
@@ -12,8 +15,6 @@ section.screen
     justify-content: center
     flex-wrap: wrap
     min-height: 100vh
-    & > *
+    .content
+        max-width: 900px
         flex-basis: 100%
-        flex-direction: column
-        align-items: center
-        display: flex
