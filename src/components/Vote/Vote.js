@@ -62,6 +62,7 @@ class Vote extends React.Component {
 
     choicesSet() {
         const ids = this.state.items.filter(i => i.selected).map(i => i.id);
+        this.setState({ items: [], loading: true });
         return this.props.choicesSet(this.state.stage.type, ids);
     }
 
