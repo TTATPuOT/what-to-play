@@ -26,6 +26,7 @@ class Vote extends React.Component {
         this.toggleSelected = this.toggleSelected.bind(this);
         this.getOther = this.getOther.bind(this);
         this.choicesSet = this.choicesSet.bind(this);
+        this.skipStage = this.skipStage.bind(this);
     }
 
     componentDidMount() {
@@ -66,6 +67,11 @@ class Vote extends React.Component {
         return this.props.choicesSet(this.state.stage.type, ids);
     }
 
+    skipStage() {
+        this.setState({ items: [], loading: true });
+        return this.props.choicesSet(this.state.stage.type, []);
+    }
+
     render() {
         const TagNameTypes = { base: BaseItems, child: ChildItems, big: BigItems, two: TwoItems, image: ImageItems };
         const TagName = TagNameTypes[this.state.stage.component];
@@ -81,9 +87,15 @@ class Vote extends React.Component {
                     <h2>{this.state.stage.question}</h2>
                     <div className="variants">{variants}</div>
                     <div className="bottom">
-                        <button disabled={this.state.loading} className="other" onClick={this.getOther}>
-                            {this.state.stage.change ? "Give me other options for answer..." : ""}
-                        </button>
+                        <div>
+                            <button disabled={this.state.loading} className="other" onClick={this.getOther}>
+                                {this.state.stage.change ? "Give me other options for answer" : ""}
+                            </button>
+                            {this.state.stage.change && "or"}
+                            <button disabled={this.state.loading} className="other" onClick={this.skipStage}>
+                                Just skip this question
+                            </button>
+                        </div>
                         <button
                             className="next"
                             disabled={selected === -1 || this.state.loading}

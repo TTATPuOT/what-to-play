@@ -1,8 +1,6 @@
 import {APP_STAGE_CHANGE, CHOICES_SET} from "../constants/actionTypes";
 
-const initialState = {
-    stage: 0
-};
+const initialState = { stage: 0 };
 
 export default (state = initialState, action) => {
 

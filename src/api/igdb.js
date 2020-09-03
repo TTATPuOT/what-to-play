@@ -96,14 +96,14 @@ export default {
             for (const ratings of choices.rating) {
                 q.push(`(aggregated_rating >= ${ratings[0]} & aggregated_rating <= ${ratings[1]})`);
             }
-            query.push(q.join(" | "));
+            query.push("(" + q.join(" | ") + ")");
         }
         if (choices.timeToBeat.length) {
             const q = [];
             for (const timeToBeat of choices.timeToBeat) {
                 q.push(`(time_to_beat >= ${timeToBeat[0]} & time_to_beat <= ${timeToBeat[1]})`);
             }
-            query.push(q.join(" | "));
+            query.push("(" + q.join(" | ") + ")");
         }
         if (choices.releaseDate.length) {
             const lastDate = choices.releaseDate[choices.releaseDate.length - 1];

@@ -1,23 +1,24 @@
 import React from 'react';
 import {connect} from "react-redux";
 import changeStage from "../../actions/changeStage";
+import stageTypes from "../../constants/stageTypes";
 
 import "./Start.sass";
 
 class Start extends React.Component {
     render() {
-
         return (
             <section className="start">
-                <h1>Hi there!</h1>
+                <h2>Hi there!</h2>
+                <h1>Find nice games for play tonight by answer simple questions</h1>
                 <div className="cards">
                     <div className="card">
                         <h4>Answer questions</h4>
-                        <p>We will ask you just 10 questions about your gaming preferences.</p>
+                        <p>We will ask you just {stageTypes.length - 1} questions about your gaming preferences.</p>
                     </div>
                     <div className="card">
-                        <h4>Change answers</h4>
-                        <p>If the answers do not suit you, you can change them.</p>
+                        <h4>Change answers or skip questions</h4>
+                        <p>If the answers do not suit you, you can change them. Also, you can just skip stupid question.</p>
                     </div>
                     <div className="card">
                         <h4>Get games recommendations</h4>

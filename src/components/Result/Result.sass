@@ -1,8 +1,7 @@
 section.result
     padding: 25px 20px
     width: 100%
-    min-height: 100vh
-    height: 100%
+    min-height: calc(100vh - 50px)
     position: relative
     display: flex
     flex-direction: row
@@ -12,6 +11,8 @@ section.result
     background-position: 50% 50%
     background-size: cover
     box-sizing: border-box
+    @media (max-width: 990px)
+        padding: 20px 0
     .content
         align-items: center
     & > *
@@ -27,15 +28,26 @@ section.result
         background: rgb(0,0,0)
         background: radial-gradient(circle, rgba(32,34,37,.65) 0%, rgba(32,34,37,1) 100%)
     .game
+        $height: 249px
         display: flex
         justify-content: space-between
+        @media (max-width: 990px)
+            flex-wrap: wrap
         & > *
             flex: 1
-        $height: 249px
+            @media (max-width: 990px)
+                flex: auto
         .media
             max-width: 50%
             padding-left: 5px
             position: relative
+            @media (max-width: 990px)
+                flex-basis: 100%
+                min-height: 250px
+                max-width: none
+                margin-top: 15px
+                padding: 15px
+                box-sizing: border-box
             .rating
                 width: 50px
                 height: 50px
@@ -52,6 +64,12 @@ section.result
                 top: -15px
                 color: #FFF
                 z-index: 2
+                @media (max-width: 990px)
+                    top: 25px
+                    right: 25px
+                    width: 40px
+                    height: 40px
+                    font-size: 18px
                 &-good
                     background: #43b581
                 &-normal
@@ -80,6 +98,8 @@ section.result
                     opacity: 0
                     transition: 0.2s ease
                     cursor: pointer
+                    @media (max-width: 990px)
+                        opacity: 0.3
                     &.right
                         right: 10px
                         left: auto
@@ -94,6 +114,10 @@ section.result
             justify-content: space-between
             min-height: $height
             padding-right: 5px
+            @media (max-width: 990px)
+                min-height: auto
+                padding: 15px
+                box-sizing: border-box
             .title
                 font-size: 36px
                 font-weight: 700
@@ -124,7 +148,12 @@ section.result
         justify-content: space-between
         align-items: center
         margin-top: 200px
-        flex-wrap: wrap
+        max-width: 100vw
+        @media (max-width: 990px)
+            overflow-x: auto
+            display: block
+            white-space: nowrap
+            margin-top: 50px
         .item
             cursor: pointer
             width: 160px
@@ -135,6 +164,9 @@ section.result
             background-repeat: no-repeat
             background-position: 50% 50%
             transition: 0.2s ease
+            @media (max-width: 990px)
+                display: inline-block
+                margin: 15px
             &:hover
                 transform: scale(1.05)
             &.active

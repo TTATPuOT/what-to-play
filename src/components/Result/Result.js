@@ -5,7 +5,6 @@ import Loader from "../Loader";
 import Game from "./components/Game";
 import List from "./components/List";
 import {connect} from "react-redux";
-import choicesSet from "../../actions/choicesSet";
 
 class Result extends React.Component {
     constructor(props) {
@@ -13,6 +12,7 @@ class Result extends React.Component {
 
         this.state = {
             loading: true,
+            error: undefined,
             games: []
         };
 
@@ -21,7 +21,8 @@ class Result extends React.Component {
 
     componentDidMount() {
         igdb.getGames(this.props.choices, 5, 0)
-            .then(result => this.setState({ loading: false, games: result }, this.selectGame));
+            .then(result => this.setState({ loading: false, games: result }, this.selectGame))
+            .catch(error => this.setState({ error: error.message }));
     }
 
     selectGame(index = 0) {
@@ -35,6 +36,7 @@ class Result extends React.Component {
     render() {
         const selectedGame = this.state.games.find(game => game.selected);
 
+        if (this.state.error) return <div className="error">IGDB API Error: {this.state.error}</div>
         if (this.state.loading || !this.state.games || !selectedGame) return <Loader />;
 
         const background = selectedGame.cover?.image_id ? igdb.getImagePath(selectedGame.cover.image_id, "1080p") : "";
