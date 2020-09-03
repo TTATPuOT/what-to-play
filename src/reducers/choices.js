@@ -3,7 +3,7 @@ import stageTypes from "../constants/stageTypes";
 
 let initialState = {};
 for (const stage of stageTypes) {
-    if (stage) initialState[stage.type] = [];
+    if (stage) initialState[stage.type] = [-1];
 }
 
 export default (state = initialState, action) => {

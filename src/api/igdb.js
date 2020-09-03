@@ -88,8 +88,8 @@ export default {
 
 
         if (choices.multiplayer.length === 1) {
-            const query = choices.multiplayer[0] === 1 ? "!= null" : "= null";
-            query.push(`multiplayer_modes ${query}`);
+            const q = choices.multiplayer[0] === 1 ? "!= null" : "= null";
+            query.push(`multiplayer_modes ${q}`);
         }
         if (choices.rating.length) {
             const q = [];
@@ -105,6 +105,8 @@ export default {
             }
             query.push("(" + q.join(" | ") + ")");
         }
+
+
         if (choices.releaseDate.length) {
             const lastDate = choices.releaseDate[choices.releaseDate.length - 1];
             query.push(`first_release_date >= ${lastDate}`);
@@ -117,7 +119,8 @@ export default {
             .multi([request])
             .request(process.env.REACT_APP_ENDPOINT + 'multiquery');
 
-        return result.data[0].result;
+        if (result.data[0].result.length) return result.data[0].result;
+        else throw new Error("No one game found");
     },
     getImagePath: (imageId, size = "logo_med") => `//images.igdb.com/igdb/image/upload/t_${size}/${imageId}.jpg`,
 }
