@@ -18,7 +18,7 @@ class Vote extends React.Component {
         this.state = {
             items: [],
             offset: 0,
-            limit: 6,
+            limit: 15,
             loading: true,
             stage: {}
         };
@@ -57,18 +57,18 @@ class Vote extends React.Component {
         this.setState({
             items: [],
             offset: this.state.offset + this.state.limit,
-            loading: true
+            loading: true,
         }, this.updateItems);
     }
 
     choicesSet() {
         const ids = this.state.items.filter(i => i.selected).map(i => i.id);
-        this.setState({ items: [], loading: true });
+        this.setState({ items: [], loading: true, offset: 0 });
         return this.props.choicesSet(this.state.stage.type, ids);
     }
 
     skipStage() {
-        this.setState({ items: [], loading: true });
+        this.setState({ items: [], loading: true, offset: 0 });
         return this.props.choicesSet(this.state.stage.type, []);
     }
 

@@ -11,8 +11,10 @@ class Footer extends React.Component {
 
     render() {
         return <footer>
-            Developed by&nbsp;<a href="https://patriotovsky.ru/" target="_blank" rel="noopener noreferrer">Anton Neverov</a>.
-            Huge games database by&nbsp;<a href="https://www.igdb.com/" target="_blank" rel="noopener noreferrer">IGDB</a>&nbsp;API.
+            <p>
+                Developed by&nbsp;<a href="https://patriotovsky.ru/" target="_blank" rel="noopener noreferrer">Anton Neverov</a>.
+                Huge games database by&nbsp;<a href="https://www.igdb.com/" target="_blank" rel="noopener noreferrer">IGDB</a>&nbsp;API.
+            </p>
         </footer>;
     }
 }
