@@ -19,6 +19,7 @@ function ChildItems (props) {
 
     return newArray.map(item => {
         const parent = <div
+            key={item.index}
             className={item.selected ? "active item" : "item"}
             onClick={() => props.toggleSelected(item.index)}
         >
@@ -28,6 +29,7 @@ function ChildItems (props) {
         const childs = item.childs
             ? item.childs.map(item =>
                 <div
+                    key={item.index}
                     className={item.selected ? "active child" : "child"}
                     onClick={() => props.toggleSelected(item.index)}
                 >

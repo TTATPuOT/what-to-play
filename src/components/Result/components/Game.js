@@ -12,6 +12,12 @@ class Game extends React.Component {
         this.toggleScreenshot = this.toggleScreenshot.bind(this);
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.data.id !== this.props.data.id) {
+            this.setState({ selectedScreenshot: 0 });
+        }
+    }
+
     toggleScreenshot(next = true) {
         let newIndex = this.state.selectedScreenshot;
         const maxIndex = this.props.data.screenshots.length - 1;
@@ -28,7 +34,7 @@ class Game extends React.Component {
     render() {
         const data = this.props.data;
         const screenshotUrl = data.screenshots
-            ? igdb.getImagePath(data.screenshots[this.state.selectedScreenshot].image_id, "screenshot_med")
+            ? igdb.getImagePath(data.screenshots[this.state.selectedScreenshot]?.image_id, "screenshot_med")
             : "";
 
         const maxLength = 170;
