@@ -123,10 +123,25 @@ section.result
             .text
                 font-size: 15px
                 line-height: 20px
+            .more button
+                border: 0
+                border-radius: 3px
+                background-color: #7289da
+                cursor: pointer
+                padding: 8px 15px
+                color: #FFFFFF
+                transition: 0.2s ease
+                font-size: 14px
+                @media (max-width: 990px)
+                    margin-top: 25px
+                &:hover
+                    background-color: #677bc4
             .platforms
                 opacity: 0.6
                 font-size: 14px
                 margin-top: 50px
+                @media (max-width: 990px)
+                    margin-top: 25px
                 a
                     display: inline-block
                     color: #fff
@@ -148,11 +163,13 @@ section.result
         align-items: center
         margin-top: 200px
         max-width: 100vw
+        height: 106px
         @media (max-width: 990px)
             overflow-x: auto
             display: block
             white-space: nowrap
             margin-top: 50px
+            height: 123px
         .item
             cursor: pointer
             width: 160px
@@ -163,6 +180,7 @@ section.result
             background-repeat: no-repeat
             background-position: 50% 50%
             transition: 0.2s ease
+            box-sizing: border-box
             @media (max-width: 990px)
                 display: inline-block
                 margin: 15px
@@ -170,4 +188,39 @@ section.result
                 transform: scale(1.05)
             &.active
                 border: 3px solid #7289da
-                transform: scale(1.1)
+                transform: scale(1.15)
+
+    .buttons
+        display: flex
+        align-items: center
+        flex-direction: column
+        padding-top: 50px
+        .share
+            display: flex
+            justify-content: center
+            flex-wrap: wrap
+            p
+                font-size: 14px
+                width: 100%
+                text-align: center
+                margin-bottom: 0
+                padding: 0 10px
+                box-sizing: border-box
+        button
+            margin: 10px
+            border: 0
+            border-radius: 3px
+            background-color: #43b581
+            cursor: pointer
+            padding: 8px 15px
+            color: #FFFFFF
+            transition: 0.2s ease
+            font-size: 14px
+            &:hover
+                background-color: #3ca374
+            &.red
+                font-size: 12px
+                color: #f04747
+                background: transparent
+                border: 1px solid #f04747
+                margin-top: 50px

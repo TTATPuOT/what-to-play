@@ -65,51 +65,56 @@ export default {
         const request = apicalypse();
 
         request.query("games", "Games")
-            .fields(["name", "summary", "aggregated_rating", "screenshots.image_id", "cover.image_id", "platforms.name"])
+            .fields(["name", "summary", "similar_games", "aggregated_rating", "screenshots.image_id", "cover.image_id", "platforms.name"])
             .sort("popularity desc")
             .limit(limit)
             .offset(offset);
         const query = [];
 
         query.push("category = 0")
-        query.push("popularity > 0")
-        query.push("aggregated_rating > 0")
 
-        if (choices.ageRating.length)
-            query.push(`age_ratings.rating = (${choices.ageRating.join(",")})`);
-        if (choices.genre.length)
-            query.push(`genres = (${choices.genre.join(",")})`);
-        if (choices.perspective.length)
-            query.push(`player_perspectives = (${choices.perspective.join(",")})`);
-        if (choices.platform.length)
-            query.push(`platforms = (${choices.platform.join(",")})`);
-        if (choices.theme.length)
-            query.push(`themes = (${choices.theme.join(",")})`);
+        if (choices.ids.length) {
+            query.push(`id = (${choices.ids.join(",")})`);
+        } else{
+            query.push("popularity > 0")
+            query.push("aggregated_rating > 0")
+
+            if (choices.ageRating.length)
+                query.push(`age_ratings.rating = (${choices.ageRating.join(",")})`);
+            if (choices.genre.length)
+                query.push(`genres = (${choices.genre.join(",")})`);
+            if (choices.perspective.length)
+                query.push(`player_perspectives = (${choices.perspective.join(",")})`);
+            if (choices.platform.length)
+                query.push(`platforms = (${choices.platform.join(",")})`);
+            if (choices.theme.length)
+                query.push(`themes = (${choices.theme.join(",")})`);
 
 
-        if (choices.multiplayer.length === 1) {
-            const q = choices.multiplayer[0] === 1 ? "!= null" : "= null";
-            query.push(`multiplayer_modes ${q}`);
-        }
-        if (choices.rating.length) {
-            const q = [];
-            for (const ratings of choices.rating) {
-                q.push(`(aggregated_rating >= ${ratings[0]} & aggregated_rating <= ${ratings[1]})`);
+            if (choices.multiplayer.length === 1) {
+                const q = choices.multiplayer[0] === 1 ? "!= null" : "= null";
+                query.push(`multiplayer_modes ${q}`);
             }
-            query.push("(" + q.join(" | ") + ")");
-        }
-        if (choices.timeToBeat.length) {
-            const q = [];
-            for (const timeToBeat of choices.timeToBeat) {
-                q.push(`(time_to_beat >= ${timeToBeat[0]} & time_to_beat <= ${timeToBeat[1]})`);
+            if (choices.rating.length) {
+                const q = [];
+                for (const ratings of choices.rating) {
+                    q.push(`(aggregated_rating >= ${ratings[0]} & aggregated_rating <= ${ratings[1]})`);
+                }
+                query.push("(" + q.join(" | ") + ")");
             }
-            query.push("(" + q.join(" | ") + ")");
-        }
+            if (choices.timeToBeat.length) {
+                const q = [];
+                for (const timeToBeat of choices.timeToBeat) {
+                    q.push(`(time_to_beat >= ${timeToBeat[0]} & time_to_beat <= ${timeToBeat[1]})`);
+                }
+                query.push("(" + q.join(" | ") + ")");
+            }
 
 
-        if (choices.releaseDate.length) {
-            const lastDate = choices.releaseDate[choices.releaseDate.length - 1];
-            query.push(`first_release_date >= ${lastDate}`);
+            if (choices.releaseDate.length) {
+                const lastDate = choices.releaseDate[choices.releaseDate.length - 1];
+                query.push(`first_release_date >= ${lastDate}`);
+            }
         }
 
         query.map(item => `(${item})`);

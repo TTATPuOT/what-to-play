@@ -51,6 +51,11 @@ class Game extends React.Component {
                 {!!(text) &&
                 <div className="text">{data.summary.slice(0, maxLength)}{commas}</div>
                 }
+                {!!(data.similar_games) &&
+                <div className="more">
+                    <button onClick={() => this.props.showThoseGames(data.similar_games)}>Show more like this</button>
+                </div>
+                }
                 {!!(platforms) &&
                 <div className="platforms">
                     Released on {data.platforms.map(p => p.name).join(", ")}

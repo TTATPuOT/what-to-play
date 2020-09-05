@@ -1,3 +1,4 @@
 export const APP_STAGE_CHANGE = "APP_CHANGE_STAGE";
 
 export const CHOICES_SET = "CHOICES_SET";
+export const CHOICES_SET_IDS = "CHOICES_SET_IDS";
