@@ -5,11 +5,12 @@ import Loader from "../Loader";
 import BaseItems from "./items/BaseItems";
 import ChildItems from "./items/ChildItems";
 import choicesSet from "../../actions/choicesSet";
-
-import "./Vote.sass";
 import BigItems from "./items/BigItems";
 import TwoItems from "./items/TwoItems";
 import ImageItems from "./items/ImageItems";
+import BaseTextfitItems from "./items/BaseTextfitItems";
+
+import "./Vote.sass";
 
 class Vote extends React.Component {
     constructor(props) {
@@ -18,7 +19,7 @@ class Vote extends React.Component {
         this.state = {
             items: [],
             offset: 0,
-            limit: 15,
+            limit: 6,
             loading: true,
             stage: {}
         };
@@ -73,7 +74,7 @@ class Vote extends React.Component {
     }
 
     render() {
-        const TagNameTypes = { base: BaseItems, child: ChildItems, big: BigItems, two: TwoItems, image: ImageItems };
+        const TagNameTypes = { base: BaseItems, baseTextfit: BaseTextfitItems, child: ChildItems, big: BigItems, two: TwoItems, image: ImageItems };
         const TagName = TagNameTypes[this.state.stage.component];
         const variants = this.state.loading || !TagName
             ? <Loader />

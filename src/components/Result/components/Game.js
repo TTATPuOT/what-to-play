@@ -1,5 +1,6 @@
 import React from "react";
 import igdb from "../../../api/igdb";
+import { Textfit } from "react-textfit";
 
 class Game extends React.Component {
     constructor(props) {
@@ -47,15 +48,17 @@ class Game extends React.Component {
 
         return <div className="game">
             <div className="description">
-                <div className="title">{data.name}</div>
-                {!!(text) &&
-                <div className="text">{data.summary.slice(0, maxLength)}{commas}</div>
-                }
-                {!!(data.similar_games) &&
-                <div className="more">
-                    <button onClick={() => this.props.showThoseGames(data.similar_games)}>Show more like this</button>
+                <div className="main">
+                    <Textfit mode="single" max={36} style={{height: 41}} className="title">{data.name}</Textfit>
+                    {!!(text) &&
+                    <Textfit max={16} style={{height: 60}} className="text">{data.summary.slice(0, maxLength)}{commas}</Textfit>
+                    }
+                    {!!(data.similar_games) &&
+                    <div className="more">
+                        <button onClick={() => this.props.showThoseGames(data.similar_games)}>Show more like this</button>
+                    </div>
+                    }
                 </div>
-                }
                 {!!(platforms) &&
                 <div className="platforms">
                     Released on {data.platforms.map(p => p.name).join(", ")}

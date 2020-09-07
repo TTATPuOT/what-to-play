@@ -108,12 +108,16 @@ section.result
                     &:hover
                         opacity: 0.8
         .description
+            min-width: 50%
+            max-width: 50%
             display: flex
             flex-direction: column
             justify-content: space-between
             min-height: $height
             padding-right: 5px
             @media (max-width: 990px)
+                min-width: auto
+                max-width: none
                 min-height: auto
                 padding: 0 15px 15px 15px
                 box-sizing: border-box
@@ -123,6 +127,7 @@ section.result
             .text
                 font-size: 15px
                 line-height: 20px
+                margin-top: 15px
             .more button
                 border: 0
                 border-radius: 3px
@@ -132,6 +137,7 @@ section.result
                 color: #FFFFFF
                 transition: 0.2s ease
                 font-size: 14px
+                margin-top: 25px
                 @media (max-width: 990px)
                     margin-top: 25px
                 &:hover
@@ -140,6 +146,9 @@ section.result
                 opacity: 0.6
                 font-size: 14px
                 margin-top: 50px
+                height: 32px
+                display: flex
+                align-items: flex-end
                 @media (max-width: 990px)
                     margin-top: 25px
                 a
@@ -169,7 +178,7 @@ section.result
             display: block
             white-space: nowrap
             margin-top: 50px
-            height: 123px
+            height: 140px
         .item
             cursor: pointer
             width: 160px
@@ -194,11 +203,12 @@ section.result
         display: flex
         align-items: center
         flex-direction: column
-        padding-top: 50px
+        padding-top: 15px
         .share
             display: flex
             justify-content: center
             flex-wrap: wrap
+            margin-top: 35px
             p
                 font-size: 14px
                 width: 100%
