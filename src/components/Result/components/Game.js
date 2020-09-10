@@ -49,9 +49,10 @@ class Game extends React.Component {
         return <div className="game">
             <div className="description">
                 <div className="main">
-                    <Textfit mode="single" max={36} style={{height: 41}} className="title">{data.name}</Textfit>
+                    <Textfit mode="single" max={36} style={{height: 41}} className="title desktop">{data.name}</Textfit>
+                    <div className="title mobile">{data.name}</div>
                     {!!(text) &&
-                    <Textfit max={16} style={{height: 60}} className="text">{data.summary.slice(0, maxLength)}{commas}</Textfit>
+                    <div max={16} style={{height: 60}} className="text">{data.summary.slice(0, maxLength)}{commas}</div>
                     }
                     {!!(data.similar_games) &&
                     <div className="more">

@@ -124,6 +124,13 @@ section.result
             .title
                 font-size: 36px
                 font-weight: 700
+                &.mobile
+                    display: none
+                    @media (max-width: 990px)
+                        display: block
+                @media (max-width: 990px)
+                    &.desktop
+                        display: none
             .text
                 font-size: 15px
                 line-height: 20px
@@ -175,10 +182,12 @@ section.result
         height: 106px
         @media (max-width: 990px)
             overflow-x: auto
+            overflow-y: hidden
             display: block
             white-space: nowrap
             margin-top: 50px
-            height: 140px
+            height: 120px
+            position: relative
         .item
             cursor: pointer
             width: 160px
