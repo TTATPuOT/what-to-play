@@ -1,5 +1,21 @@
 @import "../../variables"
 
+@keyframes triggeredItem
+    0%
+        transform: scale(1)
+    50%
+        transform: scale(1.05)
+        box-shadow: 0 14px 28px rgba(0,0,0,0.18), 0 10px 10px rgba(0,0,0,0.22)
+    100%
+        transform: scale(1)
+@keyframes itemGlow
+    0%
+        left: -90px
+    30%
+        left: calc(100% + 33px)
+    100%
+        left: calc(100% + 33px)
+
 section.vote
     padding: 0 15px
     box-sizing: border-box
@@ -87,6 +103,22 @@ section.vote
                 font-size: 14px
                 width: 90px
                 margin: 5px
+            &.triggered
+                animation: 2s ease infinite triggeredItem
+                overflow: hidden
+                position: relative
+            &.triggered:after
+                background: #FFF
+                content: ""
+                height: 140px
+                left: -90px
+                opacity: .2
+                position: absolute
+                top: -30px
+                transform: rotate(35deg)
+                width: 50px
+                animation: 3s ease 1 itemGlow
+
             .text-fit
                 display: flex
                 align-items: center
@@ -103,6 +135,7 @@ section.vote
                 box-shadow: 0 14px 28px rgba(0,0,0,0.18), 0 10px 10px rgba(0,0,0,0.22)
                 opacity: 1
                 border-color: #393c43
+                animation: none
                 @media (max-width: $breakpoint-small)
                     transform: scale(1)
             &.active

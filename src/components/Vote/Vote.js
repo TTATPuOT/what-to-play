@@ -50,10 +50,25 @@ class Vote extends React.Component {
     }
 
     toggleSelected(index) {
-        const items = this.state.items;
+        const items = this.state.items.map(i => {
+            i.triggered = false;
+            return i;
+        });
         items[index].selected = !items[index].selected;
+
+        const selectedItems = items.filter(item => item.selected).length;
+        if (selectedItems === 1) items[this.getRandomIndex(items)].triggered = true;
+
         return this.setState({ items });
     }
+
+    getRandomIndex(array) {
+        const index = Math.floor(Math.random() * array.length);
+        const i = array[index];
+        if (i.selected) return this.getRandomIndex(array);
+        else return [index];
+    }
+
 
     getOther() {
         ym('reachGoal', "vote_other", {
