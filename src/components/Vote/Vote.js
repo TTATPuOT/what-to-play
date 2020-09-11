@@ -11,6 +11,7 @@ import ImageItems from "./items/ImageItems";
 import BaseTextfitItems from "./items/BaseTextfitItems";
 
 import "./Vote.sass";
+import ym from "react-yandex-metrika";
 
 class Vote extends React.Component {
     constructor(props) {
@@ -55,6 +56,10 @@ class Vote extends React.Component {
     }
 
     getOther() {
+        ym('reachGoal', "vote_other_" + this.state.stage.type, {
+            changed: this.state.items.map(i => i.name)
+        });
+
         this.setState({
             items: [],
             offset: this.state.offset + this.state.limit,
@@ -63,12 +68,19 @@ class Vote extends React.Component {
     }
 
     choicesSet() {
-        const ids = this.state.items.filter(i => i.selected).map(i => i.id);
+        const selectedItems = this.state.items.filter(i => i.selected);
+
+        ym('reachGoal', "vote_" + this.state.stage.type, {
+            selected: selectedItems.map(i => i.name)
+        });
+
         this.setState({ items: [], loading: true, offset: 0 });
-        return this.props.choicesSet(this.state.stage.type, ids);
+        return this.props.choicesSet(this.state.stage.type, selectedItems.map(i => i.id));
     }
 
     skipStage() {
+        ym('reachGoal', "vote_skip_" + this.state.stage.type, {});
+
         this.setState({ items: [], loading: true, offset: 0 });
         return this.props.choicesSet(this.state.stage.type, []);
     }

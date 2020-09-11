@@ -19,7 +19,7 @@ class List extends React.Component {
 
             const anchor = block.querySelector(`div[data-id="${nextSelectedGame.id}"]`);
             const scrollWidth = anchor.offsetLeft - 30;
-            const anchorWidth = anchor.clientWidth * 1.15; //Так как будет увеличение
+            const anchorWidth = anchor.clientWidth * 1.15; //Так как будет увеличение после добавления класса "active"
             const scrollTo = scrollWidth - anchorWidth / 2;
 
             let start = block.scrollLeft,
@@ -43,8 +43,6 @@ class List extends React.Component {
                 }
             };
             animateScroll();
-
-            console.log(anchor, scrollWidth, anchorWidth);
 
             return this.setState({ selectedGame: nextSelectedGame });
         }

@@ -6,6 +6,7 @@ import Vote from "./components/Vote";
 import stageTypes from "./constants/stageTypes";
 import Result from "./components/Result";
 import Footer from "./components/Footer";
+import { YMInitializer } from 'react-yandex-metrika';
 
 class App extends React.Component {
     render() {
@@ -27,6 +28,7 @@ class App extends React.Component {
                 }
             </section>
             <Footer />
+            <YMInitializer accounts={[66986746]} options={{webvisor: true}} />
         </>
     }
 }

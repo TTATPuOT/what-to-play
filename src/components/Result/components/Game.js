@@ -1,6 +1,7 @@
 import React from "react";
 import igdb from "../../../api/igdb";
 import { Textfit } from "react-textfit";
+import ym from "react-yandex-metrika";
 
 class Game extends React.Component {
     constructor(props) {
@@ -11,6 +12,7 @@ class Game extends React.Component {
         };
 
         this.toggleScreenshot = this.toggleScreenshot.bind(this);
+        this.showMoreLikeThis = this.showMoreLikeThis.bind(this);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -30,6 +32,14 @@ class Game extends React.Component {
         if (newIndex > maxIndex) newIndex = 0;
 
         this.setState({ selectedScreenshot: newIndex });
+    }
+
+    showMoreLikeThis() {
+        ym('reachGoal', 'show_more', {
+            name: this.props.data.name
+        });
+
+        this.props.showThoseGames(this.props.data.similar_games);
     }
 
     render() {
@@ -56,7 +66,7 @@ class Game extends React.Component {
                     }
                     {!!(data.similar_games) &&
                     <div className="more">
-                        <button onClick={() => this.props.showThoseGames(data.similar_games)}>Show more like this</button>
+                        <button onClick={this.showMoreLikeThis}>Show more like this</button>
                     </div>
                     }
                 </div>

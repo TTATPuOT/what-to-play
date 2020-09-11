@@ -1,11 +1,23 @@
 import React from 'react';
 import {connect} from "react-redux";
+import ym from "react-yandex-metrika";
 import changeStage from "../../actions/changeStage";
 import stageTypes from "../../constants/stageTypes";
 
 import "./Start.sass";
 
 class Start extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        ym('reachGoal', 'start', {});
+        return this.props.start();
+    }
+
     render() {
         return (
             <section className="start">
@@ -26,7 +38,7 @@ class Start extends React.Component {
                     </div>
                 </div>
 
-                <button onClick={this.props.start}>Start</button>
+                <button onClick={this.handleClick}>Start</button>
             </section>
         )
     }

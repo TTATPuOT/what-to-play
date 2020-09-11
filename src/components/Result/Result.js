@@ -18,6 +18,7 @@ import {
     VKIcon,
 } from "react-share";
 import choicesSetIds from "../../actions/choicesSetIds";
+import ym from "react-yandex-metrika";
 
 class Result extends React.Component {
     constructor(props) {
@@ -35,6 +36,7 @@ class Result extends React.Component {
         this.selectGame = this.selectGame.bind(this);
         this.showMoreResults = this.showMoreResults.bind(this);
         this.showThoseGames = this.showThoseGames.bind(this);
+        this.restartQuest = this.restartQuest.bind(this);
     }
 
     componentDidMount() {
@@ -45,11 +47,17 @@ class Result extends React.Component {
         const choices = this.state.choices;
 
         igdb.getGames(this.state.choices, this.state.limit, this.state.offset)
-            .then(result => this.setState({
-                loading: false,
-                games: result,
-                error: undefined
-            }, this.selectGame))
+            .then(result => {
+                ym('reachGoal', 'result', {
+                    games: result.map(g => g.name)
+                });
+
+                return this.setState({
+                    loading: false,
+                    games: result,
+                    error: undefined
+                }, this.selectGame);
+            })
             .catch(error => {
                 const oneMoreTry = this.willOneMoreTry();
 
@@ -77,6 +85,12 @@ class Result extends React.Component {
     }
 
     showMoreResults() {
+        const selectedGame = this.state.games.find(game => game.selected);
+
+        ym('reachGoal', 'show_other', {
+            game: selectedGame ? selectedGame.name : ""
+        });
+
         this.setState({
             offset: this.state.offset + this.state.limit,
             loading: true,
@@ -103,6 +117,11 @@ class Result extends React.Component {
                 choices: this.props.choices
             }, this.showMoreResults);
         }
+    }
+
+    restartQuest() {
+        ym('reachGoal', 'restart', {});
+        window.location.reload();
     }
 
     selectGame(index = 0) {
@@ -157,7 +176,7 @@ class Result extends React.Component {
                             <VKIcon size={32} borderRadius={5} />
                         </VKShareButton>
                     </div>
-                    <button className="red" onClick={() => window.location.reload()}>Restart quest</button>
+                    <button className="red" onClick={this.restartQuest}>Restart quest</button>
                 </div>
             </div>
         </section>
