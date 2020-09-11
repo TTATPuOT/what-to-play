@@ -142,8 +142,8 @@ class Result extends React.Component {
         if (this.state.loading || !this.state.games || !selectedGame || this.state.error) {
             const oneMoreTry = this.willOneMoreTry();
             return <>
-                {!!(this.state.error) && <div className="error">IGDB API Error: {this.state.error}</div>}
-                {oneMoreTry && <div><Loader /></div>}
+                {!oneMoreTry && <div className="error">IGDB API Error: {this.state.error}</div>}
+                {oneMoreTry && <div><Loader text={this.state.error} /></div>}
             </>;
         }
 
