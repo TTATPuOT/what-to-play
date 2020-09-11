@@ -36,7 +36,7 @@ class Game extends React.Component {
 
     showMoreLikeThis() {
         ym('reachGoal', 'show_more', {
-            name: this.props.data.name
+            showMore: this.props.data.name
         });
 
         this.props.showThoseGames(this.props.data.similar_games);

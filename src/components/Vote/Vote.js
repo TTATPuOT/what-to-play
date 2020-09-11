@@ -56,8 +56,10 @@ class Vote extends React.Component {
     }
 
     getOther() {
-        ym('reachGoal', "vote_other_" + this.state.stage.type, {
-            changed: this.state.items.map(i => i.name)
+        ym('reachGoal', "vote_other", {
+            voteOther: {
+                [this.state.stage.type]: this.state.items.map(i => i.name)
+            }
         });
 
         this.setState({
@@ -70,8 +72,10 @@ class Vote extends React.Component {
     choicesSet() {
         const selectedItems = this.state.items.filter(i => i.selected);
 
-        ym('reachGoal', "vote_" + this.state.stage.type, {
-            selected: selectedItems.map(i => i.name)
+        ym('reachGoal', "vote", {
+            vote: {
+                [this.state.stage.type]: selectedItems.map(i => i.name)
+            }
         });
 
         this.setState({ items: [], loading: true, offset: 0 });
@@ -79,7 +83,9 @@ class Vote extends React.Component {
     }
 
     skipStage() {
-        ym('reachGoal', "vote_skip_" + this.state.stage.type, {});
+        ym('reachGoal', "vote_skip", {
+            voteSkip: this.state.stage.type
+        });
 
         this.setState({ items: [], loading: true, offset: 0 });
         return this.props.choicesSet(this.state.stage.type, []);

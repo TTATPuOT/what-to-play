@@ -49,7 +49,7 @@ class Result extends React.Component {
         igdb.getGames(this.state.choices, this.state.limit, this.state.offset)
             .then(result => {
                 ym('reachGoal', 'result', {
-                    games: result.map(g => g.name)
+                    resultGames: result.map(g => g.name)
                 });
 
                 return this.setState({
@@ -88,7 +88,7 @@ class Result extends React.Component {
         const selectedGame = this.state.games.find(game => game.selected);
 
         ym('reachGoal', 'show_other', {
-            game: selectedGame ? selectedGame.name : ""
+            showOther: selectedGame ? selectedGame.name : ""
         });
 
         this.setState({
