@@ -9,9 +9,10 @@ import BigItems from "./items/BigItems";
 import TwoItems from "./items/TwoItems";
 import ImageItems from "./items/ImageItems";
 import BaseTextfitItems from "./items/BaseTextfitItems";
+import cx from "classnames";
+import ym from "react-yandex-metrika";
 
 import "./Vote.sass";
-import ym from "react-yandex-metrika";
 
 class Vote extends React.Component {
     constructor(props) {
@@ -119,23 +120,20 @@ class Vote extends React.Component {
             <section className="vote">
                 <div className="question">
                     <h2>{this.state.stage.question}</h2>
+                    {this.state.stage.change &&
+                    <button disabled={this.state.loading} className="refresh" onClick={this.getOther} />
+                    }
                     <div className="variants">{variants}</div>
                     <div className="bottom">
-                        <div>
-                            <button disabled={this.state.loading} className="other" onClick={this.getOther}>
-                                {this.state.stage.change ? "Give me other options for answer" : ""}
-                            </button>
-                            {this.state.stage.change && "or"}
-                            <button disabled={this.state.loading} className="other" onClick={this.skipStage}>
-                                Just skip this question
-                            </button>
-                        </div>
                         <button
-                            className="next"
-                            disabled={selected === -1 || this.state.loading}
-                            onClick={this.choicesSet}
+                            className={cx({
+                                next: true,
+                                skip: selected === -1
+                            })}
+                            onClick={selected === -1 ? this.skipStage : this.choicesSet}
+                            disabled={this.state.loading}
                         >
-                            Next question
+                            {selected === -1 ? "Skip" : "Next"} question
                         </button>
                     </div>
                 </div>

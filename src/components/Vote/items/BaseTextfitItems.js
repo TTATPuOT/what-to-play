@@ -13,7 +13,7 @@ function baseItems (props) {
             })}
             onClick={() => props.toggleSelected(index)}
         >
-            <Textfit style={{height: 60}} class="text-fit" max={16}>{item.name}</Textfit>
+            <Textfit style={{height: 60}} className="text-fit" max={16}>{item.name}</Textfit>
             {!!(item.text) && <><p className="text">{item.text}</p></>}
         </div>
     )

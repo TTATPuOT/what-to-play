@@ -15,6 +15,13 @@
         left: calc(100% + 33px)
     100%
         left: calc(100% + 33px)
+@keyframes showItem
+    0%
+        transform: scale(0)
+    50%
+        transform: scale(1.1)
+    100%
+        transform: scale(1)
 
 section.vote
     padding: 0 15px
@@ -25,14 +32,29 @@ section.vote
 
     h2
         font-size: 42px
-        margin: 0 0 40px
+        margin: 0 0 20px
         @media (max-width: $breakpoint-small)
             font-size: 28px
+
+    button.refresh
+        background: transparent url(img/refresh.svg) no-repeat 50% 50% / contain
+        transform-origin: 44.5% 50%
+        border: 0
+        height: 75px
+        width: 75px
+        cursor: pointer
+        margin-bottom: 20px
+        transition: 0.5s ease
+        opacity: 0.25
+        outline: none !important
+        &:hover
+            opacity: 0.75
+            transform: rotate(360deg)
 
     .bottom
         text-align: right
         display: flex
-        justify-content: space-between
+        justify-content: center
         align-items: center
         margin-top: 40px
         color: #72767d
@@ -69,6 +91,12 @@ section.vote
                 margin-top: 25px
             &:hover
                 background-color: #3ca374
+            &.skip
+                background-color: #7289da
+                opacity: 0.75
+            &.skip:hover
+                background-color: #677bc4
+                opacity: 1
             &:disabled
                 background: #4F545C
                 color: #72767d
@@ -171,3 +199,7 @@ section.vote
             min-height: 200px
             @media (max-width: $breakpoint-small)
                 min-height: auto
+        .item-animation
+            opacity: 1
+            transform: scale(1)
+            transition: opacity 200ms, transform 200ms
