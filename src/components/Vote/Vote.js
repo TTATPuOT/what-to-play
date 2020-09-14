@@ -2,15 +2,17 @@ import React from 'react';
 import {connect} from "react-redux";
 import stageTypes from "../../constants/stageTypes";
 import Loader from "../Loader";
-import BaseItems from "./items/BaseItems";
-import ChildItems from "./items/ChildItems";
+import BaseItem from "./items/BaseItem";
+import ChildItem from "./items/ChildItem";
 import choicesSet from "../../actions/choicesSet";
-import BigItems from "./items/BigItems";
-import TwoItems from "./items/TwoItems";
-import ImageItems from "./items/ImageItems";
-import BaseTextfitItems from "./items/BaseTextfitItems";
+import BigItem from "./items/BigItem";
+import TwoItem from "./items/TwoItem";
+import ImageItem from "./items/ImageItem";
+import BaseTextfitItem from "./items/BaseTextfitItem";
 import cx from "classnames";
 import ym from "react-yandex-metrika";
+import TransitionGroup from "react-transition-group/cjs/TransitionGroup";
+import CSSTransition from "react-transition-group/cjs/CSSTransition";
 
 import "./Vote.sass";
 
@@ -21,7 +23,7 @@ class Vote extends React.Component {
         this.state = {
             items: [],
             offset: 0,
-            limit: 6,
+            limit: 5,
             loading: true,
             stage: {}
         };
@@ -50,12 +52,17 @@ class Vote extends React.Component {
             .then(data => this.setState({ items: data, loading: false }));
     }
 
-    toggleSelected(index) {
+    toggleSelected(id) {
         const items = this.state.items.map(i => {
+            if (id === i.id) i.selected = !i.selected;
             i.triggered = false;
+            i.childs = !i.childs ? [] : i.childs.map(c => {
+                if (id === c.id) c.selected = !c.selected;
+                c.triggered = false;
+                return c;
+            });
             return i;
         });
-        items[index].selected = !items[index].selected;
 
         const selectedItems = items.filter(item => item.selected).length;
         if (selectedItems === 1) items[this.getRandomIndex(items)].triggered = true;
@@ -81,12 +88,15 @@ class Vote extends React.Component {
         this.setState({
             items: [],
             offset: this.state.offset + this.state.limit,
-            loading: true,
+            loading: true
         }, this.updateItems);
     }
 
     choicesSet() {
-        const selectedItems = this.state.items.filter(i => i.selected);
+        const selectedItems = this.state.items.map(i => [i, i.childs])
+            .flat(1)
+            .filter(i => i)
+            .filter(i => i.selected);
 
         ym('reachGoal', "vote", {
             vote: {
@@ -108,32 +118,52 @@ class Vote extends React.Component {
     }
 
     render() {
-        const TagNameTypes = { base: BaseItems, baseTextfit: BaseTextfitItems, child: ChildItems, big: BigItems, two: TwoItems, image: ImageItems };
-        const TagName = TagNameTypes[this.state.stage.component];
-        const variants = this.state.loading || !TagName
-            ? <Loader />
-            : <TagName items={this.state.items} toggleSelected={this.toggleSelected} />;
+        const state = this.state;
+        const { stage } = state;
 
-        const selected = this.state.items.findIndex(item => item.selected);
+        const TagNameTypes = {
+            base: BaseItem,
+            baseTextfit: BaseTextfitItem,
+            child: ChildItem,
+            big: BigItem,
+            two: TwoItem,
+            image: ImageItem
+        };
+        const TagName = TagNameTypes[stage.component];
+
+        let variants = state.items.map((item, index) =>
+            <CSSTransition key={item.id} timeout={50 * index} classNames="item">
+                <TagName item={item} onClick={this.toggleSelected} />
+            </CSSTransition>
+        );
+
+        const selected = state.items.findIndex(i => i.selected) === -1;
 
         return (
             <section className="vote">
                 <div className="question">
-                    <h2>{this.state.stage.question}</h2>
-                    {this.state.stage.change &&
-                    <button disabled={this.state.loading} className="refresh" onClick={this.getOther} />
+                    <h2>{stage.question}</h2>
+                    {stage.change &&
+                    <button disabled={state.loading} className="refresh" onClick={this.getOther} />
                     }
-                    <div className="variants">{variants}</div>
+                    {state.loading && <Loader />}
+                    <TransitionGroup
+                        className="variants"
+                        exit={false}
+                        //childFactory={childFactory}
+                    >
+                        {variants}
+                    </TransitionGroup>
                     <div className="bottom">
                         <button
                             className={cx({
                                 next: true,
-                                skip: selected === -1
+                                skip: selected
                             })}
-                            onClick={selected === -1 ? this.skipStage : this.choicesSet}
-                            disabled={this.state.loading}
+                            onClick={selected ? this.skipStage : this.choicesSet}
+                            disabled={state.loading}
                         >
-                            {selected === -1 ? "Skip" : "Next"} question
+                            {selected ? "Skip" : "Next"} question
                         </button>
                     </div>
                 </div>

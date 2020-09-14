@@ -12,8 +12,8 @@ const re = (array, limit) => array.sort(() => Math.random() - Math.random()).sli
 
 export default [
     null,
-    { type: "genre", question: "What genre do you want to play?", component: "baseTextfit", change: true, data: async (l) => re(genresData, l) },
-    { type: "theme", question: "What topic should the in game?", component: "baseTextfit", change: true, data: async (l) => re(themesData, l) },
+    { type: "genre", question: "What genre do you want to play?", component: "baseTextfit", change: true, search: true, data: async (l) => re(genresData, l) },
+    { type: "theme", question: "What topic should the in game?", component: "baseTextfit", change: true, search: true, data: async (l) => re(themesData, l) },
     { type: "perspective", question: "What perspective do you like best in games?", component: "base", change: false, data: async () => perspectiveData },
     { type: "multiplayer", question: "Do you like multiplayer games?", component: "two", change: false, data: async () => multiplayerData },
     { type: "platform", question: "What platform do you want to play on?", component: "child", change: false, data: async () => platformsData },
