@@ -28,7 +28,6 @@ section.result
         background: rgb(0,0,0)
         background: radial-gradient(circle, rgba(32,34,37,.65) 0%, rgba(32,34,37,1) 100%)
     .game
-        $height: 249px
         display: flex
         justify-content: space-between
         @media (max-width: 990px)
@@ -43,7 +42,6 @@ section.result
             position: relative
             @media (max-width: 990px)
                 flex-basis: 100%
-                min-height: 250px
                 max-width: none
                 padding: 15px
                 box-sizing: border-box
@@ -74,7 +72,6 @@ section.result
                 &-normal
                     background: #faa61a
             .image
-                height: 100%
                 background-size: cover
                 background-position: 50% 50%
                 overflow: hidden
@@ -82,6 +79,16 @@ section.result
                 box-shadow: 0 8px 16px RGBA(0, 0, 0, .5)
                 position: relative
                 background-color: #202225
+                font-size: 0
+                @media (max-width: 990px)
+                    min-height: calc(100vw / ( 16 / 9 ) - 16px)
+                iframe
+                    min-height: 249px
+                    @media (max-width: 990px)
+                        min-height: calc(100vw / ( 16 / 9 ) - 16px)
+                img
+                    width: 100%
+                    cursor: pointer
                 &:hover
                     button
                         opacity: 0.5
@@ -113,7 +120,6 @@ section.result
             display: flex
             flex-direction: column
             justify-content: space-between
-            min-height: $height
             padding-right: 5px
             @media (max-width: 990px)
                 min-width: auto
@@ -152,7 +158,7 @@ section.result
             .platforms
                 opacity: 0.6
                 font-size: 14px
-                margin-top: 50px
+                margin-top: 42px
                 height: 32px
                 display: flex
                 align-items: flex-end

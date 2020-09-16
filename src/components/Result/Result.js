@@ -147,7 +147,11 @@ class Result extends React.Component {
             </>;
         }
 
-        const background = selectedGame.cover?.image_id ? igdb.getImagePath(selectedGame.cover.image_id, "1080p") : "";
+        const background = selectedGame.artworks
+            ? igdb.getImagePath(selectedGame.artworks[0].image_id, "1080p")
+            : selectedGame.cover?.image_id
+                ? igdb.getImagePath(selectedGame.cover.image_id, "1080p")
+                : "";
 
         return <section className="result" style={{backgroundImage: `url(${background})`}}>
             <div className="content">

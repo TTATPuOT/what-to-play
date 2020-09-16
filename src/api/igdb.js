@@ -5,55 +5,7 @@ const requestOptions = {
     method: 'post',
 };
 
-const flatAndUniqueArray = (array, field) => array
-    .map(game => game[field])
-    .flat(1)
-    .filter((value, index, self) =>
-        self.findIndex(v => v.id === value.id) === index
-    );
-
 export default {
-    /**
-     * Получает список жанров из самых популярных игр
-     * @param {number} limit
-     * @param {number} offset
-     * @return {Promise<T[]|*>}
-     */
-    getGenres: async (limit = 5, offset = 0) => {
-        const result = await apicalypse(requestOptions)
-            .multi([
-                apicalypse()
-                    .query("games", "Popular genres")
-                    .fields("genres.name")
-                    .sort("popularity desc")
-                    .limit(limit)
-                    .offset(offset)
-            ])
-            .request(process.env.REACT_APP_ENDPOINT + 'multiquery');
-
-        return flatAndUniqueArray(result.data[0].result, "genres")
-            .filter(genre => genre.id !== 32);
-    },
-    /**
-     * Получает список тем из самых популярных игр
-     * @param {number} limit
-     * @param {number} offset
-     * @return {Promise<T[]|*>}
-     */
-    getThemes: async (limit = 5, offset = 0) => {
-        const result = await apicalypse(requestOptions)
-            .multi([
-                apicalypse()
-                    .query("games", "Popular themes")
-                    .fields("themes.name")
-                    .sort("popularity desc")
-                    .limit(limit)
-                    .offset(offset)
-            ])
-            .request(process.env.REACT_APP_ENDPOINT + 'multiquery');
-
-        return flatAndUniqueArray(result.data[0].result, "themes");
-    },
     /**
      * Получает список игр
      * @param {Object} choices
@@ -65,7 +17,18 @@ export default {
         const request = apicalypse();
 
         request.query("games", "Games")
-            .fields(["name", "summary", "similar_games", "aggregated_rating", "screenshots.image_id", "cover.image_id", "platforms.name"])
+            .fields([
+                "name",
+                "summary",
+                "similar_games",
+                "aggregated_rating",
+                "screenshots.image_id",
+                "cover.image_id",
+                "artworks.image_id",
+                "platforms.name",
+                "videos.video_id",
+                "websites.*",
+            ])
             .sort("popularity desc")
             .limit(limit)
             .offset(offset);
@@ -127,5 +90,5 @@ export default {
         if (result.data[0].result.length) return result.data[0].result;
         else throw new Error("No one game found");
     },
-    getImagePath: (imageId, size = "logo_med") => `//images.igdb.com/igdb/image/upload/t_${size}/${imageId}.jpg`,
+    getImagePath: (imageId, size = "logo_med") => `https://images.igdb.com/igdb/image/upload/t_${size}/${imageId}.jpg`,
 }
