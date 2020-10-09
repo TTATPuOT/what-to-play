@@ -29,7 +29,7 @@ export default {
                 "videos.video_id",
                 "websites.*",
             ])
-            .sort("popularity desc")
+            .sort("aggregated_rating_count desc")
             .limit(limit)
             .offset(offset);
         const query = [];
@@ -39,7 +39,6 @@ export default {
         if (choices.ids.length) {
             query.push(`id = (${choices.ids.join(",")})`);
         } else{
-            query.push("popularity > 0")
             query.push("aggregated_rating > 0")
 
             if (choices.ageRating.length)
@@ -65,13 +64,13 @@ export default {
                 }
                 query.push("(" + q.join(" | ") + ")");
             }
-            if (choices.timeToBeat.length) {
+            /*if (choices.timeToBeat.length) {
                 const q = [];
                 for (const timeToBeat of choices.timeToBeat) {
                     q.push(`(time_to_beat >= ${timeToBeat[0]} & time_to_beat <= ${timeToBeat[1]})`);
                 }
                 query.push("(" + q.join(" | ") + ")");
-            }
+            }*/
 
 
             if (choices.releaseDate.length) {

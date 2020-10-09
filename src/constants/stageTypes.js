@@ -3,7 +3,7 @@ import multiplayerData from "./multiplayerData";
 import platformsData from "./platformsData";
 import ratingData from "./ratingData";
 import releaseDateData from "./releaseDateData";
-import timeToBeatData from "./timeToBeatData";
+//import timeToBeatData from "./timeToBeatData";
 import ageRatingData from "./ageRatingData";
 import genresData from "./genresData";
 import themesData from "./themesData";
@@ -19,6 +19,6 @@ export default [
     { type: "platform", question: "What platform do you want to play on?", component: "child", change: false, data: async () => platformsData },
     { type: "rating", question: "What critic's rating are you want?", component: "big", change: false, data: async () => ratingData },
     { type: "releaseDate", question: "When was the game release?", component: "base", change: false, data: async () => releaseDateData },
-    { type: "timeToBeat", question: "How fast you want to beat a game?", component: "base", change: false, data: async () => timeToBeatData },
+    //{ type: "timeToBeat", question: "How fast you want to beat a game?", component: "base", change: false, data: async () => timeToBeatData },
     { type: "ageRating", question: "What age rating should there be?", component: "image", change: false, data: async () => ageRatingData },
 ];

@@ -112,6 +112,7 @@ class Result extends React.Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.choices !== this.state.choices) {
+            console.log(this.props.choices);
             return this.setState({
                 offset: -this.state.limit,
                 choices: this.props.choices
